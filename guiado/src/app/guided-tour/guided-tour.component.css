@@ -1,0 +1,79 @@
+/* Estilos para el fondo con el efecto de agujero */
+.fondo-con-agujero {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.0); /* Azul claro transparente al 70% */
+    z-index: 100; /* Asegura que el fondo esté en la parte superior */
+    overflow: hidden; /* Para evitar que el contenido desborde del área visible */
+  }
+
+  /* Estilos para el efecto de agujero */
+  .fondo-con-agujero::before {
+    content: '';
+    position: absolute;
+    width: 200px; /* Ancho del círculo */
+    height: 200px; /* Alto del círculo */
+    border-radius: 50%; /* Hace que el elemento sea un círculo */
+    filter: drop-shadow(2px 4px 5px rgb(44, 44, 44)) blur(1px) !important;
+    background-color: rgba(0, 0, 255, 0); /* Transparente al 100% */
+  /*  border: 3000px solid rgba(0, 0, 255, 0.7);  Borde transparente para crear el agujero */
+   /* box-shadow: 0 0 0 2000px rgba(0, 0, 255, 0.7);  Sombra para cubrir el fondo */
+    z-index: -1; /* Coloca el círculo detrás del fondo */
+    transform: translate(-50%, -50%); /* Centra el círculo en relación con su contenedor */
+    transition: all 0.3s ease; /* Agrega una transición suave para los cambios de posición */
+}
+
+  
+.shape-outside {
+    position: absolute;
+    padding-right: 1em;
+    width: auto;
+    max-width: 400px;
+    color: #ffffff;
+    z-index: 999;
+    transform: translate(-20%, -45%);
+    font-size: 0.85em;
+  }
+  
+  .shape-outside__circle {
+    width: 200px; /* Ancho del círculo */
+    height: 200px; /* Alto del círculo */
+    border-radius: 50%;
+    background-color: transparent;
+    float: left;
+    shape-outside: circle();
+  }
+
+  .circulo{
+      position: absolute;
+      z-index: 999;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      float: left;
+      shape-outside: circle();
+      background-color: transparent;
+  }
+
+  .button-guide{
+    cursor: pointer;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    border: 1px solid rgb(241 241 241 / 50%);
+    background: none;
+     /*color: #fff;*/
+
+  }
+  .description-guide{
+    /*font-family: "Cookie", cursive;*/
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
+    margin-bottom: 1em;
+    text-shadow: 0px 0px 10px #FFFFFF;
+  }

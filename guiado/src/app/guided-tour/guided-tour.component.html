@@ -1,0 +1,19 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cookie&family=Roboto&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+<div style="width: 100%; height: 100vh; z-index: 999;" class="fondo-con-agujero">
+  <p>{{ currentStep }}</p>
+  <div id="bt" class="bt">
+
+  </div>
+</div>
+
+<section class="shape-outside">
+  <div class="shape-outside__circle"> </div>
+  <span id="description" class="description-guide"></span>
+  <div style="display: flex; flex-direction: row; justify-content: space-around; margin-top: 1em; align-items: center;">
+    <button class="button-guide" (click)="previoStep()">Anterior</button>
+    <button class="button-guide" (click)="nextStep()">Siguiente</button>
+  </div>
+</section>
