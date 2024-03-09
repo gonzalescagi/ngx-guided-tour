@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { __values } from 'tslib';
 import { IConfigurationGuide, IGuide, IModuleGuide } from './guided-tour.interface';
 
 @Injectable({
@@ -20,7 +19,6 @@ export class TourService {
   }
 
   startTour(idModule: IModuleGuide) {
-    this.showStep(this.currentStepIndex);
     const storedValue = localStorage.getItem(this.configurationsGuide?.aplication || 'APLICATION-GUIDE-TOUR');
     if (storedValue) {
       const valueList: Array<IModuleGuide> = JSON.parse(storedValue);
@@ -31,11 +29,10 @@ export class TourService {
   nextStep(idModule: IModuleGuide, currentTargetElementId: any) {
     if (this.currentStepIndex < this.steps.length - 1) {
       this.currentStepIndex++;
-      this.showStep(this.currentStepIndex);
     }
     if (currentTargetElementId?.target) {
       let target: IGuide = currentTargetElementId as IGuide;
-      this.positionButtonNextToElement('', target.target);
+      this.positionButtonNextToElement(target.target);
       this.setDescription(target.description);
       target.stateGuide = true;
       this.setLocalStorageTourStep(idModule, target);
@@ -64,20 +61,14 @@ export class TourService {
   prevStep() {
     if (this.currentStepIndex > 0) {
       this.currentStepIndex--;
-      this.showStep(this.currentStepIndex);
     }
   }
 
-  private showStep(index: number) {
-    console.log('Mostrando paso:', this.steps[index]);
-    // Aquí puedes implementar la lógica para mostrar el paso en la interfaz de usuario
-  }
 
-  positionButtonNextToElement(buttonId: string, targetElementId: string) {
+  positionButtonNextToElement(targetElementId: string) {
 
     const button = document.getElementById('bt');//TODO mejorar esta parte no es necesario que se pase el id del boton
     const targetElement = document.getElementById(targetElementId);
-    //box-shadow: 120px 80px 40px 20px #0ff;
     if (targetElement) {
       let color = this.configurationsGuide.backgroundRGBA || '#0ff';
       targetElement.style.filter = `drop-shadow(0px 0px 12px rgba(${color}))`;
@@ -126,7 +117,6 @@ export class TourService {
       const sc = document.createElement('style');
       const objCuadrado = document.querySelector('.fondo-con-agujero');
       const objCuadradoRec = objCuadrado?.getBoundingClientRect();
-      console.log('xxxxx', objCuadrado, objCuadradoRec);
 
       if (objCuadradoRec) {
         sc.innerHTML = `
@@ -139,7 +129,6 @@ export class TourService {
       let pTop = 0;
       let pLeft = 0;
       if ((objetivoRect.left + (objetivoRect.width / 2)) + 200 >= (objCuadradoRec?.width ? objCuadradoRec.width : 9999)) {
-        console.log('pegado a la derecha')
 
         if ((objetivoRect.top + (objetivoRect.width / 2)) - 200 <= 0) {
           pTop = 200;
@@ -150,7 +139,6 @@ export class TourService {
         }
         pLeft = (objCuadradoRec?.width ? objCuadradoRec.width : 9999) - 350;
       } else if ((objetivoRect.left + (objetivoRect.width / 2)) - 200 <= 0) {
-        console.log('pegado a la izquierda')
 
         if ((objetivoRect.top + (objetivoRect.width / 2)) - 200 <= 0) {//arriba
           pTop = 200;
@@ -172,14 +160,10 @@ export class TourService {
           top: ${pTop}px;
           left: ${pLeft}px;
         }`;
-
-      document.head.appendChild(sc);
-
       // Agrega el nuevo estilo al head del documento
+      document.head.appendChild(sc);
       document.head.appendChild(nuevoEstiloAgujero);
       document.head.appendChild(t);
-
-
     } else {
       console.error('Elemento objetivo no encontrado.');
       const obj = document.querySelector('.fondo-con-agujero') as HTMLElement;
@@ -211,9 +195,7 @@ export class TourService {
         border: 3000px solid rgba(0, 0, 255, 0.45)!important;
         box-shadow: 0 0 0 2000px rgba(0, 0, 255, 0.45)!important;
       }
-      .button-guide{
-        color: #fff;
-      }
+      .button-guide{ color: #fff;}
       `;
     }
     document.head.appendChild(nuevoEstiloAgujero);
@@ -261,7 +243,7 @@ export class TourService {
       localStorage.setItem(this.configurationsGuide?.aplication || 'APLICATION-GUIDE-TOUR', updatedValue);
 
     } else {
-      console.log('No se encontraron datos en el almacenamiento local para la clave especificada');
+      //'No se encontraron datos en el almacenamiento local para la clave especificada'
       listDataGuide.push(dataGuide);
       localStorage.setItem(this.configurationsGuide?.aplication || 'APLICATION-GUIDE-TOUR', JSON.stringify(listDataGuide));
     }
@@ -280,13 +262,13 @@ export class TourService {
     }
   }
 
-  public getStateStepGuide(idModule: string, target:string): boolean {
+  public getStateStepGuide(idModule: string, target: string): boolean {
     const storedValue = localStorage.getItem(this.configurationsGuide?.aplication || 'APLICATION-GUIDE-TOUR');
     let value: boolean = false;
     if (storedValue) {
       const valueList: Array<IModuleGuide> = JSON.parse(storedValue);
-      valueList?.forEach(e => { console.log('ste=>',e)
-        if (e.moduleId === idModule) value = e.steps.find(st=> st.target === target)?.stateGuide || false;
+      valueList?.forEach(e => {
+        if (e.moduleId === idModule) value = e.steps.find(st => st.target === target)?.stateGuide || false;
       });
     }
 

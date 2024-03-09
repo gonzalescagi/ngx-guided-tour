@@ -14,7 +14,7 @@ import { PruebaComponent } from './prueba/prueba.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements AfterViewInit{
-  title = 'guiado';
+  title = 'GuideTour';
   @ViewChild('firstMessage') guidedTourComponent!: GuidedTourComponent;
 
   public modulesGuide: Array<IModuleGuide> = [
@@ -43,7 +43,7 @@ export class AppComponent implements AfterViewInit{
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    if (this.guidedTourComponent && true) {
+    if (this.guidedTourComponent && false) {
       this.guidedTourComponent.setConfiguration({
         backgroundRGBA: '245, 66, 179,0.7',
         textColorHex:'#000000'
